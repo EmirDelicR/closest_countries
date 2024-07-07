@@ -12,10 +12,11 @@ import {
   Text,
   useCombobox,
 } from '@mantine/core';
+import { useThrottledValue } from '@mantine/hooks';
 import { useMutation } from '@tanstack/react-query';
-import { getCountries } from '../actions/countries';
-import { useThrottledState, useThrottledValue } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
+import { getCountries } from '../actions/countries';
+
 import { ApiResponseCountry } from '../interfaces/country';
 
 export default function CountryWidget() {
@@ -119,7 +120,7 @@ export default function CountryWidget() {
 
 function SelectOption({ value, capital, region, flag }: ApiResponseCountry) {
   return (
-    <Flex gap={'md'} align="center">
+    <Flex gap="md" align="center">
       <Image src={flag} radius="md" h={16} w={16} />
       <Box>
         <Text fz="sm" fw={500}>
