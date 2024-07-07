@@ -1,3 +1,5 @@
+import { ApiResponseCountry } from "@/app/interfaces/country";
+
 export const MOCK_IP_DATA = {
   city: 'Vienna',
   country: 'Austria',
@@ -19,5 +21,15 @@ export const MOCK_COUNTRY_DATA = [
     region: 'Europe',
     latlng: [60.116667, 19.9],
     flag: 'https://flagcdn.com/ax.svg',
+  },
+];
+
+export const MOCK_API_RESPONSE_COUNTRY_DATA: ApiResponseCountry[] = [
+  {
+    capital: 'Vienna',
+    region: 'Europa',
+    flag: 'flag',
+    value: 'Austria',
+    label: 'Austria',
   },
 ];
