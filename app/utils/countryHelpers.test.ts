@@ -3,9 +3,11 @@ import {
   calculateDistanceBetweenPoints,
   filterCountries,
   getClosesCountriesByPosition,
+  mapCountriesData,
   readCountriesFromFile,
 } from './countryHelpers';
 import { MOCK_COUNTRY_DATA } from '@/test-utils/mockData';
+import { Country } from '../interfaces/country';
 
 describe('Country helpers test', () => {
   const readFileSpy = jest.spyOn(fs.promises, 'readFile');
@@ -102,6 +104,32 @@ describe('Country helpers test', () => {
       ]);
 
       expect(await getClosesCountriesByPosition('A', 30, 50)).toEqual(MOCK_COUNTRY_DATA);
+    });
+  });
+
+
+  describe('mapCountriesData function test', () => {
+    beforeEach(() => {
+      readFileSpy.mockReset();
+    });
+
+    it('Should return mapped values', () => {
+      readFileSpy.mockResolvedValue(JSON.stringify(MOCK_COUNTRY_DATA));
+
+      const data = mapCountriesData(MOCK_COUNTRY_DATA as unknown as Country[]);
+
+      expect(data.length).toEqual(2);
+      expect(data[0]).toHaveProperty('value');
+      expect(data[0]).toHaveProperty('label');
+      expect(data[0]).toHaveProperty('flag');
+      expect(data[0]).toHaveProperty('capital');
+      expect(data[0]).toHaveProperty('region');
+
+      expect(data[0].value).toEqual(MOCK_COUNTRY_DATA[0].name);
+      expect(data[0].label).toEqual(MOCK_COUNTRY_DATA[0].name);
+      expect(data[0].flag).toEqual(MOCK_COUNTRY_DATA[0].flag);
+      expect(data[0].capital).toEqual(MOCK_COUNTRY_DATA[0].capital);
+      expect(data[0].region).toEqual(MOCK_COUNTRY_DATA[0].region);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { Country } from '../interfaces/country';
+import { ApiResponseCountry, Country } from '../interfaces/country';
 
 export const readCountriesFromFile = async (): Promise<Country[] | undefined> => {
   try {
@@ -74,7 +74,12 @@ export const getClosesCountriesByPosition = async (searchBy: string, lat: number
     .map((item) => item.data);
 };
 
-export function mapCountriesData(data: []): [] {
-  // TODO Map data for response to show some of countries details and not all 
-  return []
+export function mapCountriesData(data: Country[]): ApiResponseCountry[] {
+  return data.map((country) => ({
+    value: country.name,
+    label: country.name,
+    flag: country.flag,
+    capital: country.capital,
+    region: country.region,
+  }));
 }
