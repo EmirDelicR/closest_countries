@@ -17,5 +17,10 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     "import/extensions": "off",
+    "jsx-a11y/aria-role": [ 2, {
+        "allowedInvalidRoles": ["loader"],
+        "ignoreNonDOM": true
+    }],
+    "react/jsx-boolean-value": [0, { "assumeUndefinedIsFalse": true }]
   },
 };
