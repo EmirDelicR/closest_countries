@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { Badge, Center, Grid, Group, Loader, Text } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
-import { getUserGeolocationByIP } from "../actions/ip";
-import { useEffect } from "react";
+import { useEffect } from 'react';
+
+import { Badge, Center, Grid, Group, Loader, Text } from '@mantine/core';
+import { useMutation } from '@tanstack/react-query';
+import { getUserGeolocationByIP } from '../actions/ip';
 
 export default function IpWidget() {
   const {
@@ -46,7 +47,7 @@ export default function IpWidget() {
 
   return (
     <Center mt={50}>
-      <Grid maw={"200px"}>
+      <Grid maw="200px">
         <Grid.Col span={6}>City:</Grid.Col>
         <Grid.Col span={6}>
           <Badge>{data.city}</Badge>

@@ -3,7 +3,7 @@ import { ApiResponseCountry, Country } from '../interfaces/country';
 
 export const readCountriesFromFile = async (): Promise<Country[] | undefined> => {
   try {
-    const file = await fs.readFile(process.cwd() + '/app/utils/data.json', 'utf8');
+    const file = await fs.readFile(`${process.cwd()}/app/utils/data.json`, 'utf8');
     return JSON.parse(file);
   } catch (e) {
     return [];
@@ -35,7 +35,7 @@ export const calculateDistanceBetweenPoints = (
   const theta = userLongitude - countryLongitude;
   const radiusTheta = (Math.PI * theta) / 180;
 
-  var dist =
+  let dist =
     Math.sin(userLatRadius) * Math.sin(countryLatRadius) +
     Math.cos(userLatRadius) * Math.cos(countryLatRadius) * Math.cos(radiusTheta);
 
@@ -43,7 +43,7 @@ export const calculateDistanceBetweenPoints = (
     dist = 1;
   }
 
-  if (isNaN(dist)) {
+  if (Number.isNaN(dist)) {
     // Maybe return big number if country don't have position to be as far away as possible
     dist = 0.001;
   }
@@ -62,12 +62,10 @@ export const getClosesCountriesByPosition = async (searchBy: string, lat: number
     return [];
   }
 
-  const data = filteredCountries.map((country) => {
-    return {
-      data: country,
-      distance: calculateDistanceBetweenPoints(lat, lon, country.latlng),
-    };
-  });
+  const data = filteredCountries.map((country) => ({
+    data: country,
+    distance: calculateDistanceBetweenPoints(lat, lon, country.latlng),
+  }));
 
   return data
     .sort((a, b) => (a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0))

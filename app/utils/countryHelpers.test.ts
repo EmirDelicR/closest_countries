@@ -54,7 +54,7 @@ describe('Country helpers test', () => {
       expect((await filterCountries(MOCK_COUNTRY_DATA[0].name))?.length).toEqual(1);
     });
 
-    it('Should return only one item if filter is applied', async () => {
+    it('Should return empty list if filter is applied and no data is found', async () => {
       readFileSpy.mockResolvedValue(JSON.stringify(MOCK_COUNTRY_DATA));
 
       expect((await filterCountries('Sparta'))?.length).toEqual(0);
@@ -77,8 +77,12 @@ describe('Country helpers test', () => {
     it('Should return distance for elements', () => {
       readFileSpy.mockResolvedValue(JSON.stringify(MOCK_COUNTRY_DATA));
 
-      expect(calculateDistanceBetweenPoints(10, 10, MOCK_COUNTRY_DATA[0].latlng)).toEqual(3825.347384334331);
-      expect(calculateDistanceBetweenPoints(0, 0, MOCK_COUNTRY_DATA[0].latlng)).toEqual(4783.862496490037);
+      expect(calculateDistanceBetweenPoints(10, 10, MOCK_COUNTRY_DATA[0].latlng)).toEqual(
+        3825.347384334331
+      );
+      expect(calculateDistanceBetweenPoints(0, 0, MOCK_COUNTRY_DATA[0].latlng)).toEqual(
+        4783.862496490037
+      );
       expect(calculateDistanceBetweenPoints(0, 0, [])).toEqual(6214.141433933682);
       expect(calculateDistanceBetweenPoints(0, 0, [1])).toEqual(6214.141433933682);
     });
@@ -106,7 +110,6 @@ describe('Country helpers test', () => {
       expect(await getClosesCountriesByPosition('A', 30, 50)).toEqual(MOCK_COUNTRY_DATA);
     });
   });
-
 
   describe('mapCountriesData function test', () => {
     beforeEach(() => {
