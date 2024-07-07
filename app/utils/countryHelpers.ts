@@ -10,15 +10,18 @@ export const readCountriesFromFile = async (): Promise<Country[] | undefined> =>
   }
 };
 
-export const filterCountries = async (searchBy: string) => {
-  // TODO check if search is empty and return []
-  
-  // TODO get countries from file
+export const filterCountries = async (searchBy: string): Promise<Country[]> => {
+  if (searchBy.length === 0) {
+    return [];
+  }
 
-  // TODO filter countries by search
+  const allCountries = await readCountriesFromFile();
 
-  // TODO return countries or empty array 
-  return [];
+  const filteredCountries = allCountries?.filter((country) =>
+    country.name.toLowerCase().startsWith(searchBy.toLowerCase())
+  );
+
+  return filteredCountries || [];
 };
 
 export const calculateDistanceBetweenPoints = () => {
