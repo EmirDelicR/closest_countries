@@ -2,6 +2,7 @@ import fs from 'fs';
 import {
   calculateDistanceBetweenPoints,
   filterCountries,
+  getClosesCountriesByPosition,
   readCountriesFromFile,
 } from './countryHelpers';
 import { MOCK_COUNTRY_DATA } from '@/test-utils/mockData';
@@ -78,6 +79,29 @@ describe('Country helpers test', () => {
       expect(calculateDistanceBetweenPoints(0, 0, MOCK_COUNTRY_DATA[0].latlng)).toEqual(4783.862496490037);
       expect(calculateDistanceBetweenPoints(0, 0, [])).toEqual(6214.141433933682);
       expect(calculateDistanceBetweenPoints(0, 0, [1])).toEqual(6214.141433933682);
+    });
+  });
+
+  describe('getClosesCountriesByPosition function test', () => {
+    beforeEach(() => {
+      readFileSpy.mockReset();
+    });
+
+    it('Should return empty array if no data', async () => {
+      readFileSpy.mockResolvedValue(JSON.stringify(MOCK_COUNTRY_DATA));
+
+      expect(await getClosesCountriesByPosition('Sparta', 10, 10)).toEqual([]);
+    });
+
+    it('Should return elements with closest distance', async () => {
+      readFileSpy.mockResolvedValue(JSON.stringify(MOCK_COUNTRY_DATA));
+
+      expect(await getClosesCountriesByPosition('A', 10, 10)).toEqual([
+        { ...MOCK_COUNTRY_DATA[1] },
+        { ...MOCK_COUNTRY_DATA[0] },
+      ]);
+
+      expect(await getClosesCountriesByPosition('A', 30, 50)).toEqual(MOCK_COUNTRY_DATA);
     });
   });
 });

@@ -56,13 +56,22 @@ export const calculateDistanceBetweenPoints = (
 };
 
 export const getClosesCountriesByPosition = async (searchBy: string, lat: number, lon: number) => {
-  // TODO filter countries
-  
-  // TODO if filter data is empty skip est and return []
- 
-  // TODO map data and calculate distance
-  
-  // TODO return sorted data
+  const filteredCountries = await filterCountries(searchBy);
+
+  if (filteredCountries.length === 0) {
+    return [];
+  }
+
+  const data = filteredCountries.map((country) => {
+    return {
+      data: country,
+      distance: calculateDistanceBetweenPoints(lat, lon, country.latlng),
+    };
+  });
+
+  return data
+    .sort((a, b) => (a.distance > b.distance ? 1 : a.distance < b.distance ? -1 : 0))
+    .map((item) => item.data);
 };
 
 export function mapCountriesData(data: []): [] {
