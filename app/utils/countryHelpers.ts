@@ -24,8 +24,35 @@ export const filterCountries = async (searchBy: string): Promise<Country[]> => {
   return filteredCountries || [];
 };
 
-export const calculateDistanceBetweenPoints = () => {
-  // TODO calculate distance between 2 points, user geo location and countries
+export const calculateDistanceBetweenPoints = (
+  userLatitude: number,
+  userLongitude: number,
+  countryPosition: number[]
+) => {
+  const [countryLatitude, countryLongitude] = countryPosition;
+  const userLatRadius = (Math.PI * userLatitude) / 180;
+  const countryLatRadius = (Math.PI * countryLatitude) / 180;
+  const theta = userLongitude - countryLongitude;
+  const radiusTheta = (Math.PI * theta) / 180;
+
+  var dist =
+    Math.sin(userLatRadius) * Math.sin(countryLatRadius) +
+    Math.cos(userLatRadius) * Math.cos(countryLatRadius) * Math.cos(radiusTheta);
+
+  if (dist > 1) {
+    dist = 1;
+  }
+
+  if (isNaN(dist)) {
+    // Maybe return big number if country don't have position to be as far away as possible
+    dist = 0.001;
+  }
+
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515;
+
+  return dist;
 };
 
 export const getClosesCountriesByPosition = async (searchBy: string, lat: number, lon: number) => {
