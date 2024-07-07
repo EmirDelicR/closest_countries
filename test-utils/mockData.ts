@@ -1,4 +1,4 @@
-import { ApiResponseCountry } from "@/app/interfaces/country";
+import { ApiResponseCountry } from '@/app/interfaces/country';
 
 export const MOCK_IP_DATA = {
   city: 'Vienna',

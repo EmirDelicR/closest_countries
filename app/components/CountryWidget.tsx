@@ -26,7 +26,6 @@ export default function CountryWidget() {
   const [value, setValue] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const throttledValue = useThrottledValue(search, 1000);
-  
 
   const {
     data,
@@ -38,7 +37,7 @@ export default function CountryWidget() {
   });
 
   useEffect(() => {
-    if(throttledValue.trim().length !== 0) {
+    if (throttledValue.trim().length !== 0) {
       server_getCountries(throttledValue);
     }
   }, [throttledValue]);
@@ -104,7 +103,7 @@ export default function CountryWidget() {
             />
           </Combobox.Target>
 
-          <Combobox.Dropdown mah="300px" style={{overflowY: 'auto'}}>
+          <Combobox.Dropdown mah="300px" style={{ overflowY: 'auto' }}>
             <Combobox.Options>{renderDropdownOptionContent()}</Combobox.Options>
           </Combobox.Dropdown>
         </Combobox>

@@ -30,7 +30,6 @@ describe('CountryWidget component', () => {
     mockServerGetCountries.mockReset();
   });
 
-
   afterAll(() => {
     jest.restoreAllMocks();
   });
@@ -45,11 +44,14 @@ describe('CountryWidget component', () => {
     const input = screen.getByRole('textbox');
     await userEvent.type(input, 'a');
 
-    await waitFor(() => {
-      expect(screen.getByRole('loader')).toBeInTheDocument();
-    }, {interval: 500})
+    await waitFor(
+      () => {
+        expect(screen.getByRole('loader')).toBeInTheDocument();
+      },
+      { interval: 500 }
+    );
 
-    expect(mockServerGetCountries).toHaveBeenCalledWith("a");
+    expect(mockServerGetCountries).toHaveBeenCalledWith('a');
   });
 
   it('should render error message if state is error', async () => {
