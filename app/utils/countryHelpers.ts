@@ -1,6 +1,10 @@
-export const readCountriesFromFile = async () => {
+import { promises as fs } from 'fs';
+import { Country } from '../interfaces/country';
+
+export const readCountriesFromFile = async (): Promise<Country[] | undefined> => {
   try {
-    // TODO read data from file
+    const file = await fs.readFile(process.cwd() + '/app/utils/data.json', 'utf8');
+    return JSON.parse(file);
   } catch (e) {
     return [];
   }
