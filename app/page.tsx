@@ -2,6 +2,7 @@ import { Paper } from '@mantine/core';
 import IpWidget from './components/IpWidget';
 import Provider from './Provider';
 import CountryWidget from './components/CountryWidget';
+import MyGrid from './components/Grid';
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
         <IpWidget />
         <CountryWidget />
       </Paper>
+      {/* <MyGrid /> */}
     </Provider>
   );
 }
